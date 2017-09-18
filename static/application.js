@@ -16,7 +16,7 @@ haste_document.prototype.htmlEscape = function(s) {
 // Get this document from the server and lock it here
 haste_document.prototype.load = function(key, callback, lang) {
   var _this = this;
-  $.ajax('/documents/' + key, {
+  $.ajax('/pastebin/documents/' + key, {
     type: 'get',
     dataType: 'json',
     success: function(res) {
@@ -58,7 +58,7 @@ haste_document.prototype.save = function(data, callback) {
   }
   this.data = data;
   var _this = this;
-  $.ajax('/documents', {
+  $.ajax('/pastebin/documents', {
     type: 'post',
     data: data,
     dataType: 'json',
@@ -148,7 +148,7 @@ haste.prototype.newDocument = function(hideHistory) {
   this.$box.hide();
   this.doc = new haste_document();
   if (!hideHistory) {
-    window.history.pushState(null, this.appName, '/');
+    window.history.pushState(null, this.appName, '/pastebin');
   }
   this.setTitle();
   this.lightKey();
@@ -246,7 +246,7 @@ haste.prototype.lockDocument = function() {
       if (ret.language) {
         file += '.' + _this.lookupExtensionByType(ret.language);
       }
-      window.history.pushState(null, _this.appName + '-' + ret.key, file);
+      window.history.pushState(null, _this.appName + '-' + ret.key, '/pastebin' + file);
       _this.fullKey();
       _this.$textarea.val('').hide();
       _this.$box.show().focus();
@@ -263,7 +263,7 @@ haste.prototype.configureButtons = function() {
       label: 'Save',
       shortcutDescription: 'control + s',
       shortcut: function(evt) {
-        return evt.ctrlKey && (evt.keyCode === 83);
+        return (evt.ctrlKey || evt.metaKey) && (evt.keyCode === 83);
       },
       action: function() {
         if (_this.$textarea.val().replace(/^\s+|\s+$/g, '') !== '') {
@@ -275,7 +275,7 @@ haste.prototype.configureButtons = function() {
       $where: $('#box2 .new'),
       label: 'New',
       shortcut: function(evt) {
-        return evt.ctrlKey && evt.keyCode === 78  
+        return (evt.ctrlKey || evt.metaKey) && evt.keyCode === 78  
       },
       shortcutDescription: 'control + n',
       action: function() {
@@ -297,11 +297,11 @@ haste.prototype.configureButtons = function() {
       $where: $('#box2 .raw'),
       label: 'Just Text',
       shortcut: function(evt) {
-        return evt.ctrlKey && evt.shiftKey && evt.keyCode === 82;
+        return (evt.ctrlKey || evt.metaKey) && evt.shiftKey && evt.keyCode === 82;
       },
       shortcutDescription: 'control + shift + r',
       action: function() {
-        window.location.href = '/raw/' + _this.doc.key;
+        window.location.href = '/pastebin/raw/' + _this.doc.key;
       }
     },
     {

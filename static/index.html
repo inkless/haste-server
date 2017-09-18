@@ -2,14 +2,14 @@
 
 	<head>
 
-		<title>hastebin</title>
+		<title>Pastebin for zhangguangda.com</title>
 
-		<link rel="stylesheet" type="text/css" href="solarized_dark.css"/>
-		<link rel="stylesheet" type="text/css" href="application.css"/>
+		<link rel="stylesheet" type="text/css" href="/pastebin/solarized_dark.css"/>
+		<link rel="stylesheet" type="text/css" href="/pastebin/application.css"/>
 
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		<script type="text/javascript" src="highlight.min.js"></script>
-		<script type="text/javascript" src="application.min.js"></script>
+		<script type="text/javascript" src="/pastebin/highlight.min.js"></script>
+		<script type="text/javascript" src="/pastebin/application.min.js"></script>
 
 		<meta name="robots" content="noindex,nofollow"/>
 
@@ -18,8 +18,9 @@
 			// Handle pops
 			var handlePop = function(evt) {
 				var path = evt.target.location.pathname;
-				if (path === '/') { app.newDocument(true); }
-				else { app.loadDocument(path.substring(1, path.length)); }
+        var prefix = '/pastebin';
+				if (path === prefix) { app.newDocument(true); }
+				else { app.loadDocument(path.substring(prefix.length + 1, path.length)); }
 			};
 			// Set up the pop state to handle loads, skipping the first load
 			// to make chrome behave like others:
@@ -31,7 +32,7 @@
 			}, 1000);
 			// Construct app and load initial path
 			$(function() {
-				app = new haste('hastebin', { twitter: true });
+				app = new haste('Pastebin', { twitter: true });
 				handlePop({ target: window });
 			});
 		</script>
@@ -44,7 +45,7 @@
 		<div id="key">
 		  <div id="pointer" style="display:none;"></div>
 			<div id="box1">
-				<a href="/about.md" class="logo"></a>
+				<a href="/pastebin/about.md" class="logo"></a>
 			</div>
 			<div id="box2">
 				<button class="save function button-picture">Save</button>
